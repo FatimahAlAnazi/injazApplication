@@ -9,6 +9,7 @@ use App\Http\Controllers\API\mailController;
 use App\Http\Controllers\API\BassController as BassController;
 use App\Http\Controllers\API\ResetPasswordController;
 use App\Http\Controllers\API\ForgotPasswordController;
+//use App\Http\Controllers\API\ResetPasswordLinkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +29,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', [RegisterController::class, 'register']);
 Route::post('login', [RegisterController::class, 'login']);
-
-//Route::post('/password/email', 'API\ForgotPasswordController@sendResetLinkEmail');
-//Route::post('/password/reset', 'API\ResetPasswordController@reset');
+Route::get('logout', [RegisterController::class, 'loggedOut']);
 
 Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 Route::post('/password/reset', [ResetPasswordController::class, 'reset']);
+
+//for groupe G
+Route::post('/password/email_G', [ForgotPasswordController::class, 'sendResetLinkEmailG']);
+//Route::post('/password/reset_G', [ResetPasswordController::class, 'resetG']); //for test
+Route::post('/password/reset_token', [ResetPasswordController::class, 'tokenCheck']);
+
+//for testing
+//Route::post('/password/resetLink', [ResetPasswordLinkController::class, 'resetPasswordLink']);
 
 Route::middleware('auth:api')->group( function() {
     Route::resource('task', 'API\taskController');

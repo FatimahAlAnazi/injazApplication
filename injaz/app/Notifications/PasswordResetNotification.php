@@ -43,11 +43,18 @@ class PasswordResetNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $urlToResetForm = "http://127.0.0.1:8000/vue-app/reset-password-form/?token=". $this->token;
+       // $urlToResetForm = "http://127.0.0.1:8000/vue-app/reset-password-form/?token=". $this->token;
+      //  $urlToResetForm = "http://fierce-lake-47191.herokuapp.com/api/vue-app/reset-password-form/?token=". $this->token;
+       // $urlToResetForm = "http://fierce-lake-47191.herokuapp.com/api/password/reset";
         return (new MailMessage)
             ->subject(Lang::get('Hey! Reset Password Notification'))
             ->line(Lang::get('You requested here you go!'))
-            ->action(Lang::get('Reset Password'), $urlToResetForm)
+          //  ->action(Lang::get('Reset Password'), $urlToResetForm)
+          //  ->action(Lang::get('Reset Password'), url('/password/reset', $this->token))
+           ->action(Lang::get('Reset Password'), url('api/password/reset')) // الأخيرة
+
+          ->action(Lang::get('Reset Password'), url('api/password/reset' , $this->token)) // التجربة
+
             ->line(Lang::get('This password reset link will expire in :count minutes.', ['count' => config('auth.passwords.users.expire')]))
             ->line(Lang::get('If you did not request a password reset, no further action is required. Token: ==>'. $this->token));
 
@@ -66,3 +73,6 @@ class PasswordResetNotification extends Notification
         ];
     }
 }
+
+//no need (for test only)
+//->action(Lang::get('Reset Password'), url('/password/reset/link'))

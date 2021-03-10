@@ -10,8 +10,10 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
+//use Illuminate\Http\JsonRespons;
+//use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-class registerController extends BassController
+class RegisterController extends BassController
 {
     use HasApiTokens;
 
@@ -54,6 +56,17 @@ class registerController extends BassController
         } else {
             return $this->sendError('Unauthorised', ['error', 'Unauthorised']);
         }
+    }
+
+
+    //for logout
+    protected function loggedOut(Request $request)
+    {
+        Auth::logout();
+        return redirect(url('/login'));
+
+    //only message
+    //return $this->sendResponse('logout','You logged out successfully');
     }
 }
 
